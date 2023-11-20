@@ -1,0 +1,36 @@
+
+
+.page {
+   display: flex;
+   min-height: 100vh;
+   text-align: center;
+}
+
+/* .leftColumn, .rightColumn {
+    flex: 1;
+} */
+
+.leftColumn {
+    background-color: #f0f0f0; /* Optional: Add background color for left column */
+    flex: 0 0 auto; 
+}
+
+.rightColumn {
+    background-color: #e0e0e0; /* Optional: Add background color for right column */
+    flex: 1;
+}
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .page {
+        flex-direction: column; /* Change to a single column layout on smaller screens */
+    }
+
+    .leftColumn, .righColumn {
+        width: 100%; /* Make each column take up the full width on smaller screens */
+    }
+}
+
+
+

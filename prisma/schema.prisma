@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:asdasdasd%40123@localhost:5432/StoreDB"//("DATABASE_URL")
+}
+
+
+
+model users {
+  user_id  Int @id  @default(autoincrement()) 
+  user_name String 
+  user_email String 
+  user_password Decimal
+}
+
+model products {
+  product_id  Int @id  @default(autoincrement()) // Using auto() to indicate it's an auto-incremented field.
+  product_name String   @db.VarChar(50)
+  product_price Decimal
+  product_count Int
+  product_category String @db.VarChar(50)
+  product_img_path String @db.VarChar(100) 
+  product_description String
+  @@map("products") // Maps to the "products" table in the database.
+}
+
+model categories {
+  category_id Int  @id @default(autoincrement())
+  category_name String    @db.VarChar(50)
+  category_description String 
+  category_image_path String 
+  @@map("categories") // Maps to the "products" table in the database.
+}
+
+
+
+

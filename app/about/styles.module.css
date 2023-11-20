@@ -1,0 +1,89 @@
+.page {
+  text-align: center ;
+  padding:10px;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  boxShadow: 0 4px 8px 0 #39A7FF;
+  margin: 8px;
+  border-radius:5px;
+  text-align:center;
+  padding:30px;
+  
+}
+
+.image {
+  display: flex;
+  justify-Content: center;
+  align-Items: center;
+  
+}
+
+.aboutSection {
+  padding: 50px;
+  text-align: center;
+  background-color: #39A7FF;
+  border-radius:20px;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+  text-align: center;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #39A7FF;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:#39A7FF;
+  border-radius:20px;
+  color: #fff;
+  padding: 30px;
+  font-size: 30px;
+}
+
+.footer a {
+  padding: 20px;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
