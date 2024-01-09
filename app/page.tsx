@@ -1,59 +1,43 @@
-import { UserButton } from '@clerk/nextjs';
+
 import logo from '/public/images/cpu.png'
 import Image from 'next/image';
+import styles from './styles.module.css'
+import NavComponent from './components/navbar';
+import ItemSlider from "./components/slider/page"; // Adjust this import based on your folder structure
 
-export default function Home() {
+<link
+  href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css"
+  rel="stylesheet"
+/>;
+
+interface NavComponentProps {
+  message?: string;
+}
+
+
+export default async function Home() {
+
+    
   return (
     <main>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#E0F4FF",
-          width: "100vw",
-          height: "100vh",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "220px",
-            height: "200px",
-            border: "5px solid #39A7FF",
-            borderRadius: "30px",
-            color: "white",
-          }}
-        >
-          <div
-            style={{
-              display: "",
-              color: "black",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: "10px",
-            }}
-          >
-            <h1>Kabatokia Store</h1>
+      <div className={styles.topContainer}>
+        <div className={styles.productsContainer}>
+          <div className={styles.itemsSlider}>
+            <h1>New devices</h1>
+            {/* <ItemSlider /> */}
           </div>
-          <div style={{}}>
-            <Image
-              src={logo}
-              alt="logo"
-              style={{
-                display: "flex",
-                width: "100px",
-                height: "100px",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            />
+
+          <div className={styles.itemsSlider}>
+            <h1>New prices</h1>
+            {/* <ItemSlider /> */}
           </div>
+
+          {/* <ItemSlider />
+          <ItemSlider /> */}
         </div>
-        <UserButton afterSignOutUrl="/" />
       </div>
     </main>
   );
 }
+
+ 

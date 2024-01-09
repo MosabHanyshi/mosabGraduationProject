@@ -1,0 +1,51 @@
+/* styles.module.css */
+.page {
+  display: flex;
+  flex-wrap: wrap; /* Allow columns to wrap to the next row on small screens */
+}
+
+.leftColumn,
+.rightColumn {
+  flex: 1; /* Equal width for both columns */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.leftColumn {
+  background-color: #39A7FF;
+  color: white;
+}
+
+.rightColumn {
+  background-color: #39A7FF;
+  color: white;
+}
+
+.news {
+  overflow-y: auto;
+  max-height: 300px;
+  padding: 20px;
+  margin: 10px;
+  background: white;
+  border-radius: 10px;
+  color: #39A7FF;
+  text-align: center;
+}
+
+.newProducts,
+.userBasedProducts {
+  margin: 10px;
+  box-sizing: border-box;
+  flex: 1; /* Equal width for both sections */
+}
+
+@media (max-width: 768px) {
+  .leftColumn,
+  .rightColumn,
+  .newProducts,
+  .userBasedProducts {
+    flex: 100%; /* On screens smaller than 768px, make each section take up the full width */
+  }
+}

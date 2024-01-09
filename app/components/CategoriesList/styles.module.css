@@ -1,0 +1,28 @@
+/* components/CategoriesList.module.css */
+
+.categoriesListContainer {
+  width: 200px; /* Adjust the width based on your design */
+  color : #39A7FF;
+  cursor: pointer;
+}
+
+.categoriesList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.categoriesListItem {
+  cursor: pointer;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+}
+
+.categoriesListItem:hover {
+  background-color: #f5f5f5;
+}
+
+.arrowIcon {
+  margin-left: 8px;
+}

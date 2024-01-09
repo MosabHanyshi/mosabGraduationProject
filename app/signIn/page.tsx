@@ -1,9 +1,12 @@
+import { SignIn } from "@clerk/nextjs";
+import styles from './styles.module.css';
 
 
-export default function signIn() {
-  return (
-    <main>
-      <h2>sign in</h2>
-    </main>
-  );
+
+export default function signIn(){
+    return (
+      <div className={styles.container}>
+        <SignIn />
+      </div>
+    );
 }

@@ -8,6 +8,24 @@
 
         }
 
+
+.searchBar {
+  display:flex ;
+  margin-bottom: 20px;
+  justify-content:center;
+  align-items: center;
+}
+
+.searchBar input {
+  width: 40%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #39A7FF;
+  border-radius: 5px;
+  box-sizing: border-box;
+  
+}
+
 /* Define the grid items */
 .productItem {
             display:flex;

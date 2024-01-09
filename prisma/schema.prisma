@@ -10,13 +10,23 @@ datasource db {
   url      = "postgresql://postgres:asdasdasd%40123@localhost:5432/StoreDB"//("DATABASE_URL")
 }
 
+model admins {
+  admin_id        Int      @id
+  admin_name      String
+  admin_email     String
+  admin_specialists String?
+  admin_photo     String?
+  admin_password  Int?
+}
 
 
 model users {
   user_id  Int @id  @default(autoincrement()) 
   user_name String 
   user_email String 
-  user_password Decimal
+  user_password String
+
+  behaviors  user_behavior[] // Add this line to establish the reverse relation
 }
 
 model products {
@@ -27,6 +37,10 @@ model products {
   product_category String @db.VarChar(50)
   product_img_path String @db.VarChar(100) 
   product_description String
+  createdAt  DateTime @default(now())
+  discount_percentage  Decimal
+  profit Decimal
+
   @@map("products") // Maps to the "products" table in the database.
 }
 
@@ -37,6 +51,65 @@ model categories {
   category_image_path String 
   @@map("categories") // Maps to the "products" table in the database.
 }
+
+model cart {
+cart_id Int @id @default(autoincrement())
+user_id Int
+}
+
+model cart_item {
+cart_id Int  
+product_id Int @id @default(autoincrement()) 
+quantity Int
+}
+
+
+
+model orders {
+  order_id     Int      @id @default(autoincrement())
+  phone_number String   @db.VarChar(11)
+  payments     String   @db.Text
+  user_name    String
+  total_price  Float
+  latitude     Float  
+  longitude    Float  
+  created_at   DateTime @default(now()) // Add this line for the new column
+
+}
+
+
+model orders_time_series {
+  date       DateTime  @id @default(now())
+  order_count Int?
+  input_count Int?
+  output_count Int?
+  controller_count Int?
+  
+  @@map(name: "orders_time_series")
+}
+
+
+model news {
+  news_id Int @id @default(autoincrement())
+  content String
+}
+
+model user_behavior {
+  behavior_id  Int      @id @default(autoincrement())
+  user_id      Int?
+  page_name    String   @db.VarChar(255)
+  action_type  String   @db.VarChar(50)
+  timestamp   DateTime @default(now())
+  product_id  Int
+
+  // Corrected foreign key relationship
+  user        users?   @relation(fields: [user_id], references: [user_id])
+
+  @@index([user_id], name: "idx_user_behavior_user_id")
+}
+
+
+
 
 
 

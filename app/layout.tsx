@@ -1,13 +1,16 @@
+"use Client"
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
-import { ClerkProvider } from "@clerk/nextjs";
+// import { ClerkProvider ,auth } from "@clerk/nextjs";
+import NavComponent from './components/navbar';
+import { StateProvider } from './context/StateContext';
 
 
 
 
-const inter = Inter({ subsets: ['latin'] })
+const inter  = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    // <ClerkProvider>
       <html lang="en">
         <body
           className={inter.className}
@@ -30,40 +33,12 @@ export default function RootLayout({
             background: "white",
           }}
         >
-          <nav
-            style={{
-              width: "100%",
-              background: "#39A7FF",
-              fontSize: "20px",
-              display: "flex",
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            <Link style={{ margin: "5px" }} href="./">
-              home
-            </Link>
+       
+            <NavComponent message={""} />
 
-            <Link style={{ margin: "5px" }} href="./about">
-              about
-            </Link>
-
-            <Link style={{ margin: "5px" }} href="./contact">
-              contact
-            </Link>
-
-            <Link style={{ margin: "5px" }} href="./signIn">
-              signIn
-            </Link>
-
-            <Link style={{ margin: "5px" }} href="./signOut">
-              signOut
-            </Link>
-          </nav>
-
-          {children}
+            {children}
         </body>
       </html>
-    </ClerkProvider>
+    // </ClerkProvider>
   );
 }

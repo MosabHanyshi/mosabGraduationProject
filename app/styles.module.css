@@ -1,0 +1,52 @@
+.topContainer {
+
+       display: flex;
+       justify-content: center; 
+       flex-direction: column; 
+       alignItems: center; 
+       background: #E0F4FF;
+       width: 100%;
+       height: 100vh;
+    
+}
+
+
+.welcomeContainer{
+       background:white;
+       text-align:center;
+       color:#39A7FF;
+       font-size:20px;
+       width:100%;      
+}
+
+.productsContainer{
+       display: flex;
+       justify-content: center; 
+       flex-direction: column; 
+       background:yellow ;
+       text-align:center; 
+}
+
+.itemsSlider {
+       text-align:center;
+}
+.middleContainer {  
+
+       display: flex;
+       flexDirection: column;
+       alignItems: center;
+       width: 220px;
+       height: 200px;
+       border: 5px solid #39A7FF;
+       borderRadius: 30px;
+       color: white;
+        
+}
+.downContainer {
+       
+       display: "";
+       color: black;
+       justifyContent: center;
+       alignItems: center;
+       margin: 10px;
+}

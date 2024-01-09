@@ -9,14 +9,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'POST') {
     // Handle add logic
-    const { user_id, user_name, user_email, user_password } = req.body;
+    const { user_name, user_email, user_password } = req.body;
 
    
 
     try {
       const newUser = await prisma.users.create({
         data: {
-          user_id,
           user_name,
           user_email,
           user_password,

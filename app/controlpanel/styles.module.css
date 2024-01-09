@@ -11,12 +11,12 @@
 } */
 
 .leftColumn {
-    background-color: #f0f0f0; /* Optional: Add background color for left column */
+    background-color: white; /* Optional: Add background color for left column */
     flex: 0 0 auto; 
 }
 
 .rightColumn {
-    background-color: #e0e0e0; /* Optional: Add background color for right column */
+    background-color: white; /* Optional: Add background color for right column */
     flex: 1;
 }
 

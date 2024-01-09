@@ -159,7 +159,6 @@ const Users: React.FC = () => {
           <table className={styles.table}>
             <thead className={styles.thead}>
               <tr className={styles.tr}>
-                <th className={styles.thLeft}>user_id</th>
                 <th className={styles.th}>user_name</th>
                 <th className={styles.th}>user_email</th>
                 <th className={styles.th}>user_password</th>
@@ -168,13 +167,6 @@ const Users: React.FC = () => {
             </thead>
             <tbody>
               <tr>
-                <td
-                  className={styles.td}
-                  contentEditable={true}
-                  onBlur={(e) => handleContentChange(e, "id")}
-                >
-                  {id}
-                </td>
                 <td
                   className={styles.td}
                   contentEditable={true}

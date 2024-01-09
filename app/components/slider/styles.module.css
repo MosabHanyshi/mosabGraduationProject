@@ -1,0 +1,35 @@
+.carouselContainer {
+  max-width: 800px;
+  margin: 20px;
+  
+}
+
+.slide {
+  display: flex;
+  padding:5px;
+}
+
+.slideContent {
+  position: relative;
+  border-radius:10px;
+  margin: 30px;
+}
+
+.newNotification {
+  position: absolute;
+  top: 10;
+  left: 10;
+  background: red;
+  border-radius:10px;
+  color: white;
+  z-index: 1;
+  padding: 8px;
+}
+
+.imageContainer {
+  width:200px;
+  height:200px;
+  background-color:#39A7FF ;
+  padding:5px;
+  border-radius:10px;
+}

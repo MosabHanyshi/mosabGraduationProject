@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
 
-      console.log('reach');
+  
       
       const products = await prisma.products.findMany( {select: {
 
@@ -18,7 +18,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     product_count:true,
     product_category:true,
     product_img_path:true, 
-    product_description:true,
+    discount_percentage:true,
+    profit: true,
+
     // Add other fields you want to select
   },});
       res.status(200).json(products);

@@ -1,0 +1,22 @@
+.page {
+
+    text-align:center ;
+
+}
+
+.container {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Three columns with equal width */
+  gap: 16px; /* Adjust the gap between columns and rows as needed */
+  min-height: 100vh;
+}
+
+
+.orders {
+    width: 100%;
+    background-color: #39A7FF;
+    margin: 5px;
+    border-radius:5px;
+}

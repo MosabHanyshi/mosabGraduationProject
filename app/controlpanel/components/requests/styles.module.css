@@ -1,0 +1,20 @@
+.page {
+
+    text-align:center ;
+
+}
+.container {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensure the column takes at least the full height of the viewport */
+}
+
+
+.requests {
+    width: 100%;
+    background-color: #39A7FF;
+    margin: 5px;
+    border-radius:5px;
+}

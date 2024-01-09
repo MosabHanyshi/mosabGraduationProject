@@ -1,0 +1,121 @@
+
+
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    text-align:center;
+}
+
+.users {
+    padding: 10px;
+}
+
+.categories {
+    background-color:white ;
+    padding: 10px;
+}
+
+.products {
+    background-color:white ;
+    padding: 10px;
+}
+
+
+.buttons {
+    width: 100px;
+    height: 40px;
+    background-color: #39A7FF;
+    border-radius: 5px;
+    margin: 5px;
+    color: white ;
+}
+
+.buttons:hover {
+     background-color:white;
+     color: #39A7FF ;
+}
+
+
+.buttonRemove {
+    width: 100px;
+    height: 40px;
+    background-color: red;
+    border-radius: 5px;
+    margin: 5px;
+    color: white ;
+}
+
+.buttonRemove:hover {
+     background-color:white;
+     color: red ;
+}
+
+
+.buttonAdd {
+    width: 100px;
+    height: 40px;
+    background-color: #39A7FF;
+    border-radius: 50%;
+    margin: 5px;
+    color: white ;
+}
+
+.buttonAdd:hover {
+     background-color:white;
+     color: #39A7FF ;
+     box-shadow:10px 10px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow:10px 10px 10px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius:10px;
+  text-algin: center;
+}
+
+.thead {
+  border-radius:10px;
+}
+
+.th, .td {
+  padding: 15px;
+  text-align: left;
+  text-algin: center;
+}
+
+.th {
+  background-color: #39A7FF;
+  color: #fff;
+  text-algin: center;   
+}
+
+.thLeft{
+
+  background-color: #39A7FF;
+  color: #fff;
+  text-algin: center;   
+  border-radius: 10px 0 0 10px;    
+}
+
+.thRight {
+
+  background-color: #39A7FF;
+  color: #fff;
+  text-algin: center;   
+  border-radius: 0 10px 10px 0;
+}
+
+.tr:nth-child(even) {
+  background-color: #f9f9f9;
+  text-algin: center;
+  
+}
+
+
+
+
+
