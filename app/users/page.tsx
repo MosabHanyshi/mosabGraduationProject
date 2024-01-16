@@ -1,55 +1,51 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-interface User {
-  user_id: number;
-  user_name: string;
-  user_email: string;
-  user_password: string;
-}
-
-const UserList: React.FC = () => {
-  
-  const [users, setUsers] = useState<User[]>([]);
+const MyComponent: React.FC = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/users')
-      .then((response) => {
+    const fetchOrdersTimeSeries = async () => {
+      try {
+        const selectedDate = "2023-12"; // Replace with your desired date
+        const response = await fetch(`/api/getOrderTimeSeries/${selectedDate}`);
+
         if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
+          throw new Error(`Failed to fetch data. Status: ${response.status}`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setUsers(data);
+
+        const result = await response.json();
+        setData(result);
+        setLoading(false);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
         } else {
-          setError("Data received is not an array");
+          setError("An error occurred while fetching data.");
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching users:", error);
-        setError("Error fetching data");
-      });
-  }, []);
+        setLoading(false);
+      }
+    };
+
+    fetchOrdersTimeSeries();
+  }, []); // Ensure the effect runs only once on component mount
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <p>Error: {error}</p>;
   }
 
   return (
     <div>
-      <h1>Users</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.user_id}>
-            {user.user_name} - {user.user_email} - {user.user_password}
-          </li>
-        ))}
-      </ul>
+      <h1>Data from API:</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 };
 
-export default UserList;
+export default MyComponent;

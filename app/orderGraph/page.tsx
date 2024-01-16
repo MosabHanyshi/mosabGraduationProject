@@ -1,65 +1,52 @@
-"use client";
-import React from "react";
-import { Carousel } from "antd";
-import { Image as AntImage } from "antd"; // Correct import
+import React, { useEffect, useState } from "react";
 
-const contentStyle: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  textAlign: "center",
+const MyComponent: React.FC = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchOrdersTimeSeries = async () => {
+      try {
+        const selectedDate = "2023-01"; // Replace with your desired date
+        const response = await fetch(
+          `/api/ordersTimeSeries/${selectedDate}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data. Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setData(result);
+        setLoading(false);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An error occurred while fetching data.");
+        }
+        setLoading(false);
+      }
+    };
+
+    fetchOrdersTimeSeries();
+  }, []); // Ensure the effect runs only once on component mount
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  return (
+    <div>
+      <h1>Data from API:</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
 };
 
-const coloredDivStyle: React.CSSProperties = {
-  ...contentStyle,
-  height: "400px",
-  background: "#364d79", // Add your desired background color here
-};
-
-const imageStyle: React.CSSProperties = {
-  height: "200px",
-};
-
-const App: React.FC = () => (
-  <div
-    style={{
-      height: "200px",
-      width: "50%",
-      background: "red",
-      borderRadius: "10px",
-    }}
-  >
-    <Carousel autoplay style={coloredDivStyle}>
-      <div style={coloredDivStyle}>
-        <AntImage
-          src="/images/Arduino_Uno.jpg" // Updated path
-          alt="Image 1"
-          style={imageStyle}
-        />
-      </div>
-      <div style={coloredDivStyle}>
-        <AntImage
-          src="/images/Arduino_Uno.jpg" // Updated path
-          alt="Image 2"
-          style={imageStyle}
-        />
-      </div>
-      <div style={coloredDivStyle}>
-        <AntImage
-          src="/images/Arduino_Uno.jpg" // Updated path
-          alt="Image 3"
-          style={imageStyle}
-        />
-      </div>
-      <div style={coloredDivStyle}>
-        <AntImage
-          src="/images/Arduino_Uno.jpg" // Updated path
-          alt="Image 4"
-          style={imageStyle}
-        />
-      </div>
-    </Carousel>
-  </div>
-);
-
-export default App;
+export default MyComponent;

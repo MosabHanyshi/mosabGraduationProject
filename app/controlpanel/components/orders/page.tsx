@@ -1,10 +1,14 @@
 "use client"
-// pages/profits.tsx
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
-// import { Line } from "react-chartjs-2";
 import styles from "./styles.module.css";
 import Chart from "./components/chart";
+import dayjs, { Dayjs } from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import React from "react";
 
 interface Order {
   order_id: number;
@@ -28,8 +32,11 @@ interface OrderTimeSeries {
 }
 
 export default function Profits() {
+  const [selectedDate, setSelectedDate] = React.useState<Dayjs>(dayjs("2023-12"));
   const [orders, setOrders] = useState<Order[]>([]);
-  const [ordersTimeSeries, setOrdersTimeSeries] = useState<OrderTimeSeries[]>([]);
+  const [ordersTimeSeries, setOrdersTimeSeries] = useState<OrderTimeSeries[]>(
+    []
+  );
   const [shortestPath, setShortestPath] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,51 +62,68 @@ export default function Profits() {
         setError("Error fetching data");
       });
 
-    // Fetch order_time_series
-    const fetchData = async () => {
+  }, []);
+
+  useEffect(() => {
+    const fetchOrdersTimeSeries = async () => {
       try {
-        const response = await fetch("/api/orderTimeSeries");
-        const data = await response.json();
-        setOrdersTimeSeries(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        const response = await fetch(
+          `/api/getOrderTimeSeries/${selectedDate.format("YYYY-MM")}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data. Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setOrdersTimeSeries(result);
+        setLoading(false);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An error occurred while fetching data.");
+        }
+        setLoading(false);
       }
     };
 
-    fetchData();
-  }, []);
+    fetchOrdersTimeSeries();
+  }, [selectedDate]); // Ensure the effect runs only once on component mount
 
-
-   const calculateShortestPath = async (points: Order[]) => {
-     try {
-       setLoading(true);
-       const response = await fetch("/api/travelingSalesman", {
-         method: "POST",
-         headers: {
-           "Content-Type": "application/json",
-         },
-         body: JSON.stringify({ points }),
-       });
-
-       if (response.ok) {
-         const data = await response.json();
-         setShortestPath(data.shortestPath);
-       } else {
-         console.error("Failed to calculate shortest path");
-       }
-     } catch (error) {
-       console.error("Error:", error);
-     } finally {
-       setLoading(false);
-     }
-   };
-
-    const handleCalculate = () => {
-    calculateShortestPath(orders);
+  const handleDateChange = (date: Dayjs | null) => {
+    if (date) {
+      setSelectedDate(date);
+    }
   };
 
+  const calculateShortestPath = async (points: Order[]) => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/travelingSalesman", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ points }),
+      });
 
+      if (response.ok) {
+        const data = await response.json();
+        setShortestPath(data.shortestPath);
+      } else {
+        console.error("Failed to calculate shortest path");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const handleCalculate = () => {
+    calculateShortestPath(orders);
+  };
 
   function haversineDistance(
     lat1: number,
@@ -132,45 +156,26 @@ export default function Profits() {
   }
 
 
-
-
-
-
-  // Prepare data for Chart.js
-const chartData = {
-  labels: ordersTimeSeries.map((order) => {
-    const dateObject = new Date(order.date);
-    return dateObject.toLocaleDateString();
-  }),
-  datasets: [
-    {
-      label: "Order Count",
-      data: ordersTimeSeries.map((order) => order.order_count),
-      fill: false,
-      borderColor: "rgb(75, 192, 192)",
-      tension: 0.1,
-    },
-  ],
-};
-
-const chartOptions = {
-  scales: {
-    y: {
-      min: 0,
-    },
-  },
-};
-
   return (
     <div>
       <h1>Orders</h1>
-      <h2>Location of store : 32.407967548166255 , 35.272159931126055</h2>
+
+      <div className={styles.calenderContainer}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker"]}>
+            <DatePicker
+              defaultValue={selectedDate}
+              views={["year", "month"]}
+              onChange={handleDateChange}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+        <h1>{selectedDate.format("YYYY-MM")}</h1>
+      </div>
 
       <div>
-        {/* Display live chart using ordersTimeSeries data */}
         <div style={{ width: "80%", margin: "auto" }}>
-          {/* <Line data={chartData} options={chartOptions} /> */}
-          <Chart data={ordersTimeSeries} category={"input"} />
+          <Chart data={ordersTimeSeries} category={"order"} />
         </div>
       </div>
 

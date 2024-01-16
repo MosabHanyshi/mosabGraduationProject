@@ -4,6 +4,10 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import styles from "./styles.module.css";
 import { useEffect , useState } from "react";
 import Chart from "../orders/components/chart";
+import dayjs, { Dayjs } from "dayjs";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 
 interface OrderTimeSeries {
@@ -15,32 +19,65 @@ interface OrderTimeSeries {
 }
 
 export default function Payments() {
+  const [ordersTimeSeries, setOrdersTimeSeries] = useState<OrderTimeSeries[]>(
+    []
+  );
+  const [error, setError] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = React.useState<Dayjs>(
+    dayjs("2023-12")
+  );
 
-    const [ordersTimeSeries, setOrdersTimeSeries] = useState<OrderTimeSeries[]>(
-      []
-    );
-      const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchOrdersTimeSeries = async () => {
+      try {
+        const response = await fetch(
+          `/api/getOrderTimeSeries/${selectedDate.format("YYYY-MM")}`
+        );
 
-
-
-    useEffect(() => {
-
-      const fetchData = async () => {
-        try {
-          const response = await fetch("/api/orderTimeSeries");
-          const data = await response.json();
-          setOrdersTimeSeries(data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data. Status: ${response.status}`);
         }
-      };
 
-      fetchData();
-    }, []);
+        const result = await response.json();
+        setOrdersTimeSeries(result);
+        setLoading(false);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An error occurred while fetching data.");
+        }
+        setLoading(false);
+      }
+    };
+
+    fetchOrdersTimeSeries();
+  }, [selectedDate]); 
+
+
+   const handleDateChange = (date: Dayjs | null) => {
+     if (date) {
+       setSelectedDate(date);
+     }
+   };
 
   return (
     <div className={styles.page}>
       <h1>Payments charts</h1>
+      
+      <div className={styles.calenderContainer}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker"]}>
+            <DatePicker
+              defaultValue={selectedDate}
+              views={["year", "month"]}
+              onChange={handleDateChange}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+        <h1>{selectedDate.format("YYYY-MM")}</h1>
+      </div>
+
       <div className={styles.container}>
         <div className={styles.input}>
           <h2>Input devices</h2>
@@ -60,3 +97,7 @@ export default function Payments() {
     </div>
   );
 }
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+

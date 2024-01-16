@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+"use client"
+import { LineChart } from "@mui/x-charts/LineChart";
+import React, { useEffect, useState } from "react";
+
 import {
   VictoryChart,
   VictoryLine,
@@ -20,119 +23,120 @@ interface ChartProps {
   category: string;
 }
 
-interface ChartState {
-  selectedDomain?: { x: [Date, Date] };
-  zoomDomain?: { x: [Date, Date] };
-}
-
-interface XYDomain {
-  x: [Date, Date];
-  y: [number, number];
-}
-
 const Chart: React.FC<ChartProps> = ( {data, category} ) => {
-  const [chartState, setChartState] = useState<ChartState>({});
+  const [numbers, setNumbers] = useState<number[]>([]);
+  const [dates, setDates] = useState<number[]>([]);
+  const [month, setMonth] = useState<string>('');
 
-  const handleZoom = (domain: any) => {
-    setChartState((prev) => ({ ...prev, selectedDomain: domain }));
-  };
+   useEffect(() => {
+     const fetchData = async () => {
+       try {
+         // Run your functions here
+         const datesDataPromise = getDates(data);
+         const valuesDataPromise = getValues(data, category);
 
-  const handleBrush = (domain: XYDomain) => {
-    setChartState((prev) => ({ ...prev, zoomDomain: domain }));
-  };
+         // Wait for promises to resolve
+         const datesData =  datesDataPromise;
+         const valuesData = valuesDataPromise;
+
+         // Set the state outside the functions
+         setDates(datesData);
+         setNumbers(valuesData);
+
+       } catch (error) {
+         console.error("Error fetching data:", error);
+         // Handle errors if needed
+       }
+     };
+
+     fetchData();
+   }, [data, category]);
 
 
+  
+ const getDates =  (data: OrderTimeSeries[]) => {
 
-  const dateFormate = (x:Date) => {
 
-    const date = new Date(x);
-    const year = date.getFullYear().toString().slice(2);
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}/${month}/${day}`;
+    let dateStrings: string[] = [];
+    let days: number[] = [];
 
-  }
+    data.forEach((point) => {
+      // Assuming point.date is a string
+      if (typeof point.date === "string") {
+        dateStrings.push(point.date);
+      }
+    });
 
-  const renderDataForCategory = () => {
+    dateStrings.map((date)=>{
+ 
+        days.push(parseInt(date.split("T")[0].split("-")[2]));
+
+    });
+
+    return days;
+ };
+
+  const getValues =(
+
+    data: OrderTimeSeries[],
+    category: string
+   
+  ) => {
+    let counts: number[] = [];
+
     switch (category) {
       case "input":
-        return data.map((point) => ({
-          x: point.date,
-          y: point.input_count,
-        }));
+        counts = data.map((point) => point.input_count);
+        break;
+
       case "output":
-        // Handle other categories if needed
-        return data.map((point) => ({
-          x: point.date,
-          y: point.output_count, // Update to the appropriate property for output category
-        }));
+        counts = data.map((point) => point.output_count);
+        break;
 
       case "controller":
-        // Handle other categories if needed
-        return data.map((point) => ({
-          x: point.date,
-          y: point.controller_count, // Update to the appropriate property for output category
-        }));
+        counts = data.map((point) => point.controller_count);
+        break;
 
       default:
-        return data.map((point) => ({
-          x: point.date,
-          y: point.order_count,
-        }));
+        counts = data.map((point) => point.order_count);
+        break;
     }
+    return counts;
   };
 
   return (
-    <div>
-      <VictoryChart
-        width={550}
-        height={300}
-        scale={{ x: "time" }}
-        containerComponent={
-          <VictoryZoomContainer
-            responsive={false}
-            zoomDimension="x"
-            zoomDomain={chartState.zoomDomain}
-            onZoomDomainChange={handleZoom}
+    <>
+      <div>
+        <h1>{category}</h1>
+      </div>
+      <div>
+        {dates.length > 0 ? (
+          <LineChart
+            xAxis={[
+              {
+                data: dates,
+                id: "x-axis",
+              },
+            ]}
+            series={[
+              {
+                // data: numbers,
+                data: numbers
+              },
+            ]}
+            width={1000}
+            height={500}
           />
-        }
-      >
-        <VictoryLine
-          style={{
-            data: { stroke: "#39A7FF" },
-          }}
-          data={renderDataForCategory()}
-        />
-      </VictoryChart>
-
-      <VictoryChart
-        height={90}
-        scale={{ x: "time" }}
-        padding={{ top: 10, left: 0, right: 0, bottom: 30 }}
-        containerComponent={
-          <VictoryBrushContainer
-            responsive={true}
-            brushDimension="x"
-            brushDomain={chartState.selectedDomain}
-            onBrushDomainChange={handleBrush}
-          />
-        }
-      >
-        <VictoryAxis
-          tickValues={data.map((point) => point.date)}
-          tickFormat={(x) =>
-            new Date(x).toLocaleDateString("en-US", { timeZone: "UTC" })
-          }
-        />
-        <VictoryLine
-          style={{
-            data: { stroke: "#39A7FF" },
-          }}
-          data={renderDataForCategory()}
-        />
-      </VictoryChart>
-    </div>
+        ) : (
+          <h1>Hi</h1>
+        )}
+      </div>
+    </>
   );
 };
 
 export default Chart;
+
+
+
+

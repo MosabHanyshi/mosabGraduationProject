@@ -9,8 +9,6 @@ import { useStateValue } from "../context/StateContext";
 import CategoriesList from "../components/CategoriesList/CategoriesList";
 import SearchAndCategories from "../components/CategoriesList/CategoriesList";
 
-// import CartId from "@/pages/api/updateCart/[cartId]";
-
 
 interface Product {
 
