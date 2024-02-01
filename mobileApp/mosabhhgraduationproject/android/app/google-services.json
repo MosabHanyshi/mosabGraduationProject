@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "71866955892",
+    "project_id": "mosab-9d052",
+    "storage_bucket": "mosab-9d052.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71866955892:android:2cc5a79ec23510b7787921",
+        "android_client_info": {
+          "package_name": "com.graduation.mosabapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy8HlsLyQIGvpMrP46mml_jMD4HOqXvLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

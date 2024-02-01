@@ -1,0 +1,1 @@
+enum Appearance { LIGHT, DARK, SETTING }
