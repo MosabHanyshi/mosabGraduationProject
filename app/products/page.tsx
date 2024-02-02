@@ -5,9 +5,11 @@ import Photo from "../product_images/LCD16x2.jpg";
 import styles from "./styles.module.css";
 import { useEffect, useState } from "react";
 import NavComponent from "../components/navbar";
-import { useStateValue } from "../context/StateContext";
 import CategoriesList from "../components/CategoriesList/CategoriesList";
 import SearchAndCategories from "../components/CategoriesList/CategoriesList";
+import { checkAuth } from "@/utils/auth";
+import router from "next/router";
+import Layout from "../components/Layout";
 
 
 interface Product {
@@ -67,6 +69,7 @@ const ProductsList: React.FC<ProductsListProps> = ({userId=2}) => {
   }, []);
 
   const addToCartButton = (addedItem: CartItem, productCategory: string) => {
+    
     fetch(`/api/createCartItem`, {
       method: "POST",
       headers: {
@@ -141,6 +144,7 @@ const ProductsList: React.FC<ProductsListProps> = ({userId=2}) => {
 
   return (
     <>
+    <Layout>
       <div className={styles.top}>
         <SearchAndCategories
           onSearchTerm={setSearchTerm}
@@ -191,6 +195,7 @@ const ProductsList: React.FC<ProductsListProps> = ({userId=2}) => {
           </div>
         ))}
       </div>
+      </Layout>
     </>
   );
 };

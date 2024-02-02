@@ -11,6 +11,7 @@ interface Product {
   product_category: string;
   product_img_path: string;
   product_description: string;
+  product_discount:number
 }
 
 const Products: React.FC = () => {
@@ -24,7 +25,7 @@ const Products: React.FC = () => {
   const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-
+  const [discount, setDiscount] = useState(0);
   const [showDiv, setShowDiv] = useState(false);
   const [editedData, setEditedData] = useState({
     id,
@@ -34,6 +35,7 @@ const Products: React.FC = () => {
     category,
     image,
     description,
+    discount
   });
   const [isNameChecked, setNameChecked] = useState(false);
   const [isPriceChecked, setPriceChecked] = useState(false);
@@ -41,6 +43,7 @@ const Products: React.FC = () => {
   const [isCategoryChecked, setCategoryChecked] = useState(false);
   const [isImageChecked, setImageChecked] = useState(false);
   const [isDescriptionChecked, setDescriptionChecked] = useState(false);
+  const [isDiscountChecked, setDiscountChecked] = useState(false);
 
   useEffect(() => {
     fetch("/api/products")
@@ -64,12 +67,14 @@ const Products: React.FC = () => {
   }, []);
 
   const handleCreate = (editedData: Product) => {
+    
     fetch(`/api/createProduct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(editedData),
+      
     })
       .then((response) => {
         if (!response.ok) {
@@ -85,6 +90,7 @@ const Products: React.FC = () => {
       .catch((error) => {
         // Handle errors
         console.error("Error creating product:", error);
+        console.log(editedData)
       });
   };
 
@@ -180,6 +186,11 @@ const Products: React.FC = () => {
     setDescriptionChecked(!isDescriptionChecked); // Toggle the boolean value
   };
 
+    // Handler function for checkbox change
+    const handleDiscountCheckboxChange = () => {
+      setDiscountChecked(!isDiscountChecked); // Toggle the boolean value
+    };
+
   return (
     <div>
       <div className={styles.products}>
@@ -191,25 +202,27 @@ const Products: React.FC = () => {
           <table className={styles.table}>
             <thead className={styles.thead}>
               <tr className={styles.tr}>
-                <th className={styles.thLeft}>product_id</th>
+                {/* <th className={styles.thLeft}>product_id</th> */}
                 <th className={styles.th}>product_name</th>
                 <th className={styles.th}>product_price</th>
                 <th className={styles.th}>product_count</th>
                 <th className={styles.th}>product_category</th>
                 <th className={styles.th}>product_image</th>
                 <th className={styles.th}>product_description</th>
+                <th className={styles.th}>discount</th>
+
                 <th className={styles.thRight}>action</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td
+                {/* <td
                   className={styles.td}
                   contentEditable={true}
                   onBlur={(e) => handleContentChange(e, "id")}
                 >
                   {id}
-                </td>
+                </td> */}
                 <td
                   className={styles.td}
                   contentEditable={true}
@@ -237,7 +250,7 @@ const Products: React.FC = () => {
                   contentEditable={true}
                   onBlur={(e) => handleContentChange(e, "category")}
                 >
-                  {count}
+                  {category}
                 </td>
 
                 <td
@@ -245,7 +258,7 @@ const Products: React.FC = () => {
                   contentEditable={true}
                   onBlur={(e) => handleContentChange(e, "image")}
                 >
-                  {count}
+                  {image}
                 </td>
 
                 <td
@@ -253,7 +266,15 @@ const Products: React.FC = () => {
                   contentEditable={true}
                   onBlur={(e) => handleContentChange(e, "description")}
                 >
-                  {count}
+                  {description}
+                </td>
+
+                <td
+                  className={styles.td}
+                  contentEditable={true}
+                  onBlur={(e) => handleContentChange(e, "discount")}
+                >
+                  {discount}
                 </td>
 
                 <td className={styles.td}>
@@ -268,6 +289,7 @@ const Products: React.FC = () => {
                         product_category: editedData.category,
                         product_img_path: editedData.image,
                         product_description: editedData.description,
+                        product_discount: editedData.discount
                       })
                     }
                   >
@@ -282,7 +304,7 @@ const Products: React.FC = () => {
         <table className={styles.table}>
           <thead className={styles.thead}>
             <tr className={styles.tr}>
-              <th className={styles.thLeft}>product_id</th>
+              {/* <th className={styles.thLeft}>product_id</th> */}
               <th className={styles.th}>
                 <input
                   type="checkbox"
@@ -336,13 +358,22 @@ const Products: React.FC = () => {
                 product_description
               </th>
 
+              <th className={styles.th}>
+                <input
+                  type="checkbox"
+                  checked={isDescriptionChecked}
+                  onChange={handleDescriptionCheckboxChange}
+                />
+                 discount
+              </th>
+
               <th className={styles.thRight}>action</th>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
               <tr key={product.product_id}>
-                <td className={styles.td}>{product.product_id}</td>
+                {/* <td className={styles.td}>{product.product_id}</td> */}
                 <td
                   className={styles.td}
                   contentEditable={true}
@@ -387,6 +418,15 @@ const Products: React.FC = () => {
                   {product.product_description}
                 </td>
 
+                
+                <td
+                  className={styles.td}
+                  contentEditable={true}
+                  onBlur={(e) => handleContentChange(e, "discount")}
+                >
+                  {product.product_description}
+                </td>
+
                 <td className={styles.td}>
                   <button
                     className={styles.buttonRemove}
@@ -416,6 +456,9 @@ const Products: React.FC = () => {
                         product_description: isDescriptionChecked
                           ? editedData.description
                           : product.product_description,
+                        product_discount: isDiscountChecked 
+                        ? editedData.discount
+                        : product.product_discount
                       })
                     }
                   >

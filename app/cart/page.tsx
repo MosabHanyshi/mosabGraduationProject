@@ -5,6 +5,10 @@ import axios from "axios";
 import Image from "next/image";
 import MapComponent from "./components/map/page";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import { checkAuth } from "@/utils/auth";
+import router from "next/router";
+import Layout from '../components/Layout';
+
 
 interface Item {
   cart_id: number;
@@ -329,8 +333,10 @@ const CardList: React.FC = () => {
  }, [inputCount, outputCount, controllerCount]);
 
 
+
   return (
     <>
+    <Layout>
       <div className={styles.pageContainer}>
         <div className={styles.cartSide}>
           {products.map((product) => {
@@ -383,7 +389,7 @@ const CardList: React.FC = () => {
         </div>
         <div className={styles.checkoutSide}>
           <MapComponent
-            username={"ahmad"}
+            username={"Mosab Hanyshi"}
             payments={payments}
             total_price={total}
             input_count={inputCount}
@@ -421,6 +427,7 @@ const CardList: React.FC = () => {
           </div>
         </div>
       </div>
+      </Layout>
     </>
   );
 };
@@ -429,3 +436,7 @@ const CardList: React.FC = () => {
 
 
 export default CardList;
+
+function authenticate() {
+  throw new Error("Function not implemented.");
+}

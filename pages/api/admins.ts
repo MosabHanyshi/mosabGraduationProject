@@ -8,22 +8,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
    
     try {
-       
+             
       const admins = await prisma.admins.findMany( {select: {
-         admin_id: true,
          admin_name: true,
          admin_email: true,
          admin_specialists: true,
          admin_photo: true,
          admin_password:true
-    // Add other fields you want to select
   },});
+
+      console.log(admins)
       res.status(200).json(admins);
+      
       
       
 
     } catch (error) {
       res.status(500).json({ message: "Internal Server Error" });
+      
       
     } finally {
       await prisma.$disconnect();

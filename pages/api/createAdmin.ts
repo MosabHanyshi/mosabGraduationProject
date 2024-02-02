@@ -9,14 +9,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'POST') {
     // Handle add logic
-    const { admin_id, admin_name, admin_email,admin_specialists,admin_photo, admin_password } = req.body;
+    const {admin_name, admin_email,admin_specialists,admin_photo, admin_password } = req.body;
 
-   
+    
 
     try {
       const newAdmin = await prisma.admins.create({
         data: {
-          admin_id,
           admin_name,
           admin_email,
           admin_specialists,

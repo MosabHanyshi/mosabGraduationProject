@@ -40,6 +40,7 @@ export default function Profits() {
   const [shortestPath, setShortestPath] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hiddenOrders, setHiddenOrders] = useState<number []>([]);
 
   useEffect(() => {
     // Fetch orders
@@ -146,34 +147,37 @@ export default function Profits() {
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    // Radius of the Earth in kilometers (mean value)
     const R = 6371;
-
-    // Calculate the distance
     const distance = R * c;
 
     return distance;
   }
 
 
-  return (
-    <div>
-      <h1>Orders</h1>
+  const readyOrder = (orderIndex: number) => {
+    setHiddenOrders((prevHiddenOrders) => [...prevHiddenOrders, orderIndex]);
+  };
 
-      <div className={styles.calenderContainer}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DatePicker"]}>
-            <DatePicker
-              defaultValue={selectedDate}
-              views={["year", "month"]}
-              onChange={handleDateChange}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
-        <h1>{selectedDate.format("YYYY-MM")}</h1>
+
+  return (
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <h1>Orders</h1>
+
+        <div className={styles.calenderContainer}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker"]}>
+              <DatePicker
+                defaultValue={selectedDate}
+                views={["year", "month"]}
+                onChange={handleDateChange}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
       </div>
 
-      <div>
+      <div className={styles.container}>
         <div style={{ width: "80%", margin: "auto" }}>
           <Chart data={ordersTimeSeries} category={"order"} />
         </div>
@@ -184,14 +188,21 @@ export default function Profits() {
       </button>
 
       <div className={styles.container}>
-        {shortestPath.map((point, index) => (
+      {shortestPath.map((point, index) => (
+        !hiddenOrders.includes(index) && (
           <div key={index} className={styles.orders}>
+            <>
             <p>{`name : ${point.user_name}`}</p>
+            </>
             <p>{`phone : ${point.phone_number}`}</p>
             <p>{`order_id : ${point.order_id}`}</p>
-            {/* <p>{`value : ${point.latitude}`}</p> */}
+            <p>location :</p>
+            <p>{`latitude : ${point.latitude}`}</p>
+            <p>{`longitude : ${point.longitude}`}</p>
+            <button className={styles.greenButton} onClick={() => readyOrder(index)}>Done</button>
           </div>
-        ))}
+        )
+      ))}
       </div>
     </div>
   );

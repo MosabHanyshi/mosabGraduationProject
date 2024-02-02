@@ -63,34 +63,33 @@ export default function Payments() {
 
   return (
     <div className={styles.page}>
-      <h1>Payments charts</h1>
-      
-      <div className={styles.calenderContainer}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DatePicker"]}>
-            <DatePicker
-              defaultValue={selectedDate}
-              views={["year", "month"]}
-              onChange={handleDateChange}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
-        <h1>{selectedDate.format("YYYY-MM")}</h1>
+      <div className={styles.header}>
+        <h1>Payments charts</h1>
+
+        <div className={styles.calenderContainer}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker"]}>
+              <DatePicker
+                defaultValue={selectedDate}
+                views={["year", "month"]}
+                onChange={handleDateChange}
+                className={styles.customDatePicker}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
       </div>
 
       <div className={styles.container}>
         <div className={styles.input}>
-          <h2>Input devices</h2>
           <Chart data={ordersTimeSeries} category="input" />
         </div>
 
         <div className={styles.output}>
-          <h2>Output devices</h2>
           <Chart data={ordersTimeSeries} category="output" />
         </div>
 
         <div className={styles.control}>
-          <h2>Control devices</h2>
           <Chart data={ordersTimeSeries} category="controller" />
         </div>
       </div>

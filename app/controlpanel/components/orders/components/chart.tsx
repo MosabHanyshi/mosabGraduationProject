@@ -107,7 +107,7 @@ const Chart: React.FC<ChartProps> = ( {data, category} ) => {
   return (
     <>
       <div>
-        <h1>{category}</h1>
+        <h1>{category} devices</h1>
       </div>
       <div>
         {dates.length > 0 ? (
@@ -121,14 +121,29 @@ const Chart: React.FC<ChartProps> = ( {data, category} ) => {
             series={[
               {
                 // data: numbers,
-                data: numbers
+                data: numbers,
               },
             ]}
             width={1000}
             height={500}
           />
         ) : (
-          <h1>Hi</h1>
+          <LineChart
+            xAxis={[
+              {
+                data: [1, 2, 3, 4, 5, 6, 7],
+                id: "x-axis",
+              },
+            ]}
+            series={[
+              {
+                // data: numbers,
+                data: [0, 0, 0, 0, 0, 0, 0],
+              },
+            ]}
+            width={1000}
+            height={500}
+          />
         )}
       </div>
     </>

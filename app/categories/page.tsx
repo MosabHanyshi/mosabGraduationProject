@@ -5,6 +5,10 @@ import Photo from "../product_images/LCD16x2.jpg";
 import styles from "./styles.module.css";
 import { useEffect, useState } from "react";
 import NavComponent from "../components/navbar";
+import { checkAuth } from "@/utils/auth";
+import router from "next/router";
+import Layout from '../components/Layout';
+
 
 interface Category {
   category_id: number;
@@ -48,8 +52,11 @@ const ProductsList: React.FC = () => {
     category.category_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+
+
   return (
     <>
+    <Layout>
       <div className={styles.searchBar}>
         <input
           type="text"
@@ -77,6 +84,7 @@ const ProductsList: React.FC = () => {
           </div>
         ))}
       </div>
+      </Layout>
     </>
   );
 };

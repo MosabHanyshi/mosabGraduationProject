@@ -9,7 +9,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
  
   if (req.method === 'PUT') {
     const {cart_id, product_id ,quantity } = req.body;
-    console.log(cart_id+'--'+product_id+'--'+quantity);
     try {
       const updatedCartItem = await prisma.cart_item.update({
         where: { product_id: Number(productId) },

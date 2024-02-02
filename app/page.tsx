@@ -24,16 +24,12 @@ export default async function Home() {
         <div className={styles.productsContainer}>
           <div className={styles.itemsSlider}>
             <h1>New devices</h1>
-            {/* <ItemSlider /> */}
           </div>
 
           <div className={styles.itemsSlider}>
             <h1>New prices</h1>
-            {/* <ItemSlider /> */}
           </div>
 
-          {/* <ItemSlider />
-          <ItemSlider /> */}
         </div>
       </div>
     </main>

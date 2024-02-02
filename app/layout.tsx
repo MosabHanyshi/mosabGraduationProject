@@ -33,8 +33,7 @@ export default function RootLayout({
             background: "white",
           }}
         >
-       
-            <NavComponent message={""} />
+            {/* <NavComponent message={""} /> */}
 
             {children}
         </body>

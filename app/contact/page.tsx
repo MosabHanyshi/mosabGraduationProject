@@ -1,7 +1,10 @@
 "use client"
+import { checkAuth } from "@/utils/auth";
 import NavComponent from "../components/navbar";
 import { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
+import router from "next/router";
+import Layout from "../components/Layout";
 
 
 
@@ -30,7 +33,8 @@ export default function Contact()  {
     }
   };
   return (
-    <main>
+    <>
+    <Layout>
       <div>
         <ul>
           {messages.map((msg, index) => (
@@ -44,6 +48,9 @@ export default function Contact()  {
         />
         <button onClick={sendMessage}>Send</button>
       </div>
-    </main>
+      </Layout>
+
+      </>
+  
   );
 }

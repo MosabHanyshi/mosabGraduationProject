@@ -47,21 +47,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
               },
 
               input_count: {
-                increment: inputCount||0,
+                increment: inputCount,
               },
 
               output_count: {
-                increment: outputCount||0,
+                increment: outputCount,
               },
 
               controller_count: {
-                increment: controllerCount||0,
+                increment: controllerCount,
               },
             },
           });
 
-
-          console.log('Order count updated for the current date:', updatedOrder);
+        console.log("input count :",inputCount)
+        console.log("output count :",outputCount)
+        console.log("controller count :",controllerCount)
+          // console.log('Order count updated for the current date:', updatedOrder);
         } else {
           // If the record doesn't exist, create a new record with order_count set to 1
           const newOrderTimeSeries = await prisma.orders_time_series.create({

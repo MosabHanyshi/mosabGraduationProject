@@ -9,7 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { to, subject, text } = req.body;
 
-  const senderEmail = 'ahmadwnabhan1999@gmail.com'; // Update this with a verified sender in your Mailgun account
+  // const senderEmail = 'ahmadwnabhan1999@gmail.com'; // Update this with a verified sender in your Mailgun account
+  const senderEmail = 'mosabhanaysha@gmail.com'; // Update this with a verified sender in your Mailgun account
 
 
   const apiKey = process.env.MAILGUN_API_KEY;

@@ -212,14 +212,16 @@ const Users: React.FC = () => {
         <table className={styles.table}>
           <thead className={styles.thead}>
             <tr className={styles.tr}>
-              <th className={styles.thLeft}> user_id</th>
+              {/* <th className={styles.thLeft}> user_id</th> */}
               <th className={styles.th}>
+                <div>
                 <input
                   type="checkbox"
                   checked={isNameChecked}
                   onChange={handleNameCheckboxChange}
                 />
-                user_name
+                 <p>user_name</p>
+                 </div>
               </th>
 
               <th className={styles.th}>
@@ -246,13 +248,13 @@ const Users: React.FC = () => {
           <tbody>
             {users.map((user) => (
               <tr key={user.user_id}>
-                <td
+                {/* <td
                   className={styles.td}
                   contentEditable={true}
                   onBlur={(e) => handleContentChange(e, "id")}
                 >
                   {user.user_id}
-                </td>
+                </td> */}
 
                 <td
                   className={styles.td}

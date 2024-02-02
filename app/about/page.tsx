@@ -1,21 +1,27 @@
+"use client"
 import styles from "./styles.module.css";
 import person from "../../public/images/person.png"
 import Image from "next/image";
 import { FaFacebookF, FaTwitter, FaInstagram, FaWhatsappSquare } from "react-icons/fa";
 import NavComponent from "../components/navbar";
+import { useEffect } from "react";
+import { checkAuth } from "@/utils/auth";
+import router from "next/router";
+import Layout from '../components/Layout';
 
 export default function about() {
+
+
   return (
     <>
+      <Layout>
       {/* <NavComponent message={""} /> */}
       <div className={styles.page}>
         <div className={styles.aboutSection}>
           <h1>About Us Page</h1>
-          <p>Some text about who we are and what we do.</p>
-          <p>
-            Resize the browser window to see that this page is responsive by the
-            way.
-          </p>
+          <p>Kapatokiya is an online store that sells various electronics. 
+            We have a large quantity of these electronics... 
+            We hope that you will find everything you need with us.</p>
         </div>
 
         <h2>Our Team</h2>
@@ -90,6 +96,7 @@ export default function about() {
           </a>
         </div>
       </div>
+      </Layout>
     </>
   );
 }

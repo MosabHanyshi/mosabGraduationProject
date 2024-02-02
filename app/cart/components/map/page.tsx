@@ -45,9 +45,9 @@ const OrderForm: React.FC<OrderFormProps> = ({
   const [longitude, setLongitude] = useState<number>(0);
   const [clickedCoordinates, setClickedCoordinates] =
     useState<Coordinates | null>(null);
-  const [inputCount, setInputCount] = useState<number>(0);
-  const [outputCount, setOutputCount] = useState<number>(0);
-  const [controllerCount, setControllerCount] = useState<number>(0);
+  const [inputCount, setInputCount] = useState<number>(input_count);
+  const [outputCount, setOutputCount] = useState<number>(output_count);
+  const [controllerCount, setControllerCount] = useState<number>(controller_count);
 
   useEffect(() => {
     mapboxgl.accessToken =
@@ -84,7 +84,6 @@ const OrderForm: React.FC<OrderFormProps> = ({
     editedData: Order,
     
   ) => {
-    console.log(editedData);
     fetch(`/api/createOrder`, {
       method: "POST",
       headers: {

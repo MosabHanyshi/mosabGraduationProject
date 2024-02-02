@@ -51,11 +51,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   else if (req.method === 'POST') {
     // Handle add logic
     const { product_name , product_price , product_count ,  product_category , product_img_path , product_description } = req.body;
-
+    
+    const profit = 0
+    const discount_percentage = 0.0
     try {
       const newProduct = await prisma.products.create({
         data: {
-        product_name , product_price , product_count ,  product_category , product_img_path , product_description
+        product_name , product_price , product_count ,  product_category , product_img_path , product_description , discount_percentage , profit
           // Add other fields as needed
         },
       });

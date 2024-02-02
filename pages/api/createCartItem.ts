@@ -9,6 +9,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Handle add logic
     const { cart_id, product_id, quantity } = req.body;
 
+    console.log(cart_id);
+    console.log(product_id);
+    console.log(quantity);
+
     try {
       // Check if the product ID already exists in the cart
       const existingCartItem = await prisma.cart_item.findUnique({
@@ -18,6 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       res.status(201).json(existingCartItem);
+
 
       if (!existingCartItem) {
           // If the product ID does not exist, create a new cart item.

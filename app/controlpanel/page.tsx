@@ -13,6 +13,9 @@ import Profits from "./components/profits/page";
 import Request from "./components/requests/page";
 import Campaigns from "./components/campaigns/page";
 import NavComponent from "../components/navbar";
+import { checkAuth } from "@/utils/auth";
+import router from "next/router";
+import Layout from "../components/Layout";
 
 
 const ControlPanel:React.FC = () => {
@@ -27,11 +30,10 @@ const ControlPanel:React.FC = () => {
   const [profits, setProfits] = useState(false);
   const [requests, setRequests] = useState(false);
   const [campaigns, setCampaigns] = useState(false);
+
+
+
   
-
-
-  
-
  const handlePageClick = (pageName: string) =>{
 
   console.log(pageName);
@@ -150,6 +152,7 @@ const ControlPanel:React.FC = () => {
 
   return (
     <>
+    <Layout>
       {/* <NavComponent message={""} /> */}
       <div className={styles.page}>
         <div className={styles.leftColumn}>
@@ -168,6 +171,7 @@ const ControlPanel:React.FC = () => {
           {campaigns? <Campaigns/>: null}
         </div>
       </div>
+      </Layout>
     </>
   );
   }

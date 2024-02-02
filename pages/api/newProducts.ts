@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
+
       const last10Products = await prisma.products.findMany({
         select: {
           product_id: true,

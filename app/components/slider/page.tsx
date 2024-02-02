@@ -21,9 +21,10 @@ interface Product {
 
 interface CarouselSliderProps {
   products: Product[]; 
+  type: string;
 }
 
-const CarouselSlider: React.FC<CarouselSliderProps> = ({products}) => {
+const CarouselSlider: React.FC<CarouselSliderProps> = ({products,type}) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -38,7 +39,7 @@ const CarouselSlider: React.FC<CarouselSliderProps> = ({products}) => {
         {products.map((product) => (
           <div key={product.product_id} className={styles.slide}>
             <div className={styles.slideContent}>
-              <div className={styles.newNotification}>New</div>
+              {type=="new"?<div className={styles.newNotification}>New</div>:null}
               <div className={styles.imageContainer}>
                 <img
                   src={product.product_img_path}

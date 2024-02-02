@@ -1,19 +1,13 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-// import { UserButton } from "@clerk/nextjs";
-// import { useUser } from "@clerk/nextjs";
 import SupervisedUserCircleRoundedIcon from "@mui/icons-material/SupervisedUserCircleRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import { useStateValue } from "../context/StateContext";
-
-
 import styles from './styles.module.css';
-import { StateProvider } from "../context/StateContext";
 
 
 
